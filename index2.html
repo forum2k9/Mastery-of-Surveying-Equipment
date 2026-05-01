@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastery of Surveying Equipment: Interactive Theodolite</title>
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --secondary-gray: #555;
+            --overlay-bg: rgba(0, 0, 0, 0.75);
+            --shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fbf9;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: var(--primary-green);
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .research-subtitle {
+            font-style: italic;
+            color: var(--secondary-gray);
+            margin-top: 0;
+        }
+
+        .map-container {
+            position: relative;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Hover effect for the instrument image */
+        .map-container img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            transition: filter 0.3s ease;
+        }
+
+        .map-container img:hover {
+            filter: brightness(1.02) drop-shadow(0 0 8px rgba(46, 125, 50, 0.3));
+        }
+
+        area {
+            cursor: help;
+            outline: none;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--overlay-bg);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+
+        /* Modal Box */
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-top: 10px solid var(--primary-green);
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content h2 {
+            color: var(--primary-green);
+            margin-top: 0;
+            font-size: 1.6rem;
+        }
+
+        .modal-content p {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #444;
+            margin: 20px 0;
+        }
+
+        .close-btn {
+            background-color: #c62828;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background-color: #b71c1c;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Mastery of Surveying Equipment</h1>
+    <p class="research-subtitle">Interactive Learning Object: Essential Components of a Theodolite</p>
+</header>
+
+<div class="map-container">
+    <img src="img/Theodolite-sm.png" usemap="#theodolite-map" alt="Digital Theodolite Diagram">
+    
+    <map name="theodolite-map">
+        <area onclick="showInfo('Rear Sight', 'The Rear Sight (Optical Peep) is used for the initial, rough sighting of the target before focusing through the main telescope.')" 
+              coords="316,49,287,92,291,97,324,57,322,48" shape="poly" alt="Rear Sight">
+
+        <area onclick="showInfo('Telescope Focusing Knob', 'Used to adjust the internal lens system to bring the target into sharp focus, ensuring visual clarity for precise measurement.')" 
+              coords="244,148,270,111,290,108,304,112,316,124,322,136,323,153,294,189,300,164,287,147,275,139,257,137" shape="poly" alt="Telescope Focusing">
+    
+        <area onclick="showInfo('Microscope Focusing Knob', 'Adjusts the focus of the internal reading scale microscope for precise angle reading.')" 
+          coords="219,158,227,165,229,177,224,185,213,184,204,176,206,162" shape="poly" alt="Microscope Focusing Knob">
+
+        <area onclick="showInfo('Reticle Focusing Knob', 'Used to sharpen the focus of the crosshairs (reticle) within the telescope to match the observer\'s eyesight. Or adjusts the focus of the internal crosshairs (reticle) to eliminate parallax based on the individual observer\'s eyesight.')" 
+              coords="236,177,242,159,254,151,265,151,277,159,282,168,287,178,285,185,276,194,271,202,260,202,246,198,239,187" shape="poly" alt="Reticle Focusing">
+
+        <area onclick="showInfo('Vertical Clamp Knob', 'Locks the telescope\'s vertical movement. Once engaged, only the Vertical Tangent Screw can move the telescope.')" 
+              coords="535,420,622,420,622,504,535,504" shape="poly" alt="Vertical Clamp">
+
+        <area onclick="showInfo('Vertical Tangent Screw', 'Provides slow-motion vertical adjustment for fine-tuning the target bisection after the clamp is locked.')" 
+              coords="325,239,327,226,334,217,349,208,363,208,373,214,381,225,385,239,382,251,369,262,355,269,339,263,359,254,364,237,353,227,339,225" shape="poly" alt="Vertical Tangent">
+
+        <area onclick="showInfo('Horizontal Tangent Screw', 'Used for fine horizontal adjustments to accurately bisect the target.')" 
+              coords="395,353,385,353,377,367,378,385,387,393,375,399,356,395,352,377,355,361,361,345,377,339" shape="poly" alt="Horizontal Tangent">
+
+        <area onclick="showInfo('Tubular (Plate) Level', 'A high-precision spirit level used for final vertical alignment of the instrument\'s axis.')" 
+              coords="254,291,268,275,339,294,323,305,281,303,261,296" shape="poly" alt="Tubular Level">
+
+        <area onclick="showInfo('Foot (Leveling) Screws', 'Used during the initial setup to level the circular bubble and establish a horizontal plane for the instrument.')" 
+              coords="266,447,251,444,245,432,234,436,227,448,229,456,238,464,251,469,255,476,263,478,270,478,271,469,288,465,298,459,299,443,284,433,279,444" shape="poly" alt="Foot Screws">
+
+        <area onclick="showInfo('Foot (Leveling) Screws', 'Used during the initial setup to level the circular bubble and establish a horizontal plane for the instrument.')" 
+              coords="400,412,387,418,377,423,381,428,395,432,405,432,405,443,421,444,423,433,439,430,448,421,447,409,439,400,432,401,430,415,415,416" shape="poly" alt="Foot Screws">
+
+        <area onclick="showInfo('Tribrach', 'The foundational base of the instrument that provides a secure, detachable interface between the theodolite and the tripod.')" 
+              coords="209,364,227,378,248,390,288,399,325,400,353,393,374,399,393,396,411,386,416,362,439,366,439,394,417,399,396,413,363,423,329,429,293,430,275,432,241,426,223,413,207,397" shape="poly" alt="Tribrach">
+
+        <area onclick="showInfo('Horizontal Clamp Knob', 'Locks the horizontal rotation of the instrument.')" 
+            coords="409,359,387,353,377,364,377,384,387,391,405,392,412,381,413,369" shape="poly" alt="Horizontal Clamp Knob">
+            
+        <area onclick="showInfo('Vertical Clamp Knob', 'Locks the telescope in a fixed vertical position to allow for fine adjustments with the tangent screw.')" 
+            coords="326,237,337,228,351,229,360,235,363,245,361,253,349,262,339,264,329,251" shape="poly" alt="Vertical Clamp Knob">
+            
+        <area onclick="showInfo('Plummet Focusing Knob', 'Focuses the optical plummet on the ground station mark for precise centering.')" 
+            coords="182,309,185,300,197,297,204,310,205,321,205,335,203,345,190,346,185,337,190,329,193,316" shape="poly" alt="Plummet Focusing Knob">
+            
+        <area onclick="showInfo('Plummet Reticle Focusing Knob', 'Focuses the crosshairs within the optical plummet.')" 
+            coords="183,311,189,318,189,328,188,337,178,338,175,323,175,313" shape="poly" alt="Plummet Reticle Focusing Knob">
+    </map>
+</div>
+
+<div id="infoModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="modalTitle">Component Name</h2>
+        <p id="modalDescription">Detailed technical description will appear here...</p>
+        <button class="close-btn" onclick="closeModal()">Close Information</button>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 Interactive Geo-Scientific Research Publishing | Federal Polytechnic Nasarawa
+</footer>
+
+<script>
+    /**
+     * Professional Modal Handler
+     * @param {string} title - The component name
+     * @param {string} text - Technical description
+     */
+    function showInfo(title, text) {
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalDescription").innerText = text;
+        document.getElementById("infoModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("infoModal").style.display = "none";
+    }
+
+    // Close modal if user clicks on the darkened overlay
+    window.onclick = function(event) {
+        const modal = document.getElementById("infoModal");
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    // Close modal on 'Escape' key press for accessibility
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
+
+</body>
+</html>
